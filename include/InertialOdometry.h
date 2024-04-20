@@ -53,8 +53,8 @@ class InertialOdom
         {
           this->dt = dt;
 
-          inertialSens.calibrate();
-          waitUntil(!inertialSens.isCalibrating());
+          inertialSensor.calibrate();
+          while(inertialSensor.isCalibrating()){}
 
           setInertialData();
 
