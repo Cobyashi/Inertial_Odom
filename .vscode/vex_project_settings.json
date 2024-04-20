@@ -1,0 +1,18 @@
+{
+	"project": {
+		"name": "Inertial_Odom",
+		"slot": 1,
+		"description": "Empty V5 C++ Project",
+		"platform": "V5",
+		"creationDate": "Thu, 18 Apr 2024 22:52:16 GMT",
+		"language": "cpp",
+		"sdkVersion": "V5_20240223_11_00_00",
+		"cpp": {
+			"includePath": []
+		}
+	},
+	"extension": {
+		"version": "0.5.0",
+		"json": 1
+	}
+}
