@@ -2,17 +2,17 @@
 
 void InertialOdom::setInertialData()
 {
-  ut_Acceleration.x = inertialSens.acceleration(xaxis) / G_TO_UNITS;
-  ut_Acceleration.y = inertialSens.acceleration(yaxis) / G_TO_UNITS;
-  ut_Acceleration.z = inertialSens.acceleration(zaxis) / G_TO_UNITS;
+  ut_Acceleration.x = inertialSensor.acceleration(xaxis) / G_TO_UNITS;
+  ut_Acceleration.y = inertialSensor.acceleration(yaxis) / G_TO_UNITS;
+  ut_Acceleration.z = inertialSensor.acceleration(zaxis) / G_TO_UNITS;
 
-  angularVelocity.x = inertialSens.gyroRate(xaxis, dps);
-  angularVelocity.y = inertialSens.gyroRate(yaxis, dps);
-  angularVelocity.z = inertialSens.gyroRate(zaxis, dps);
+  angularVelocity.x = inertialSensor.gyroRate(xaxis, dps);
+  angularVelocity.y = inertialSensor.gyroRate(yaxis, dps);
+  angularVelocity.z = inertialSensor.gyroRate(zaxis, dps);
 
-  s_angle.x = inertialSens.roll();
-  s_angle.y = inertialSens.pitch();
-  s_angle.z = inertialSens.yaw();
+  s_angle.x = inertialSensor.roll();
+  s_angle.y = inertialSensor.pitch();
+  s_angle.z = inertialSensor.yaw();
 }
 
 //updates transformation matrix. precursor to vector relative to the field
@@ -53,30 +53,7 @@ InertialOdom::Vector InertialOdom::integrateVector(Vector a, Vector A, double dt
   return a;
 }
 
-void InertialOdom::initialize(double dt)
-{
-  this->dt = dt;
-
-  inertialSens.calibrate();
-  waitUntil(!inertialSens.isCalibrating());
-
-  tr_Displacement.x = 0;
-  tr_Displacement.y = 0;
-  tr_Displacement.z = 0;
-
-  tr_Velocity.x = 0;
-  tr_Velocity.y = 0;
-  tr_Velocity.z = 0;
-
-  setInertialData();
-
-  updateMatrix();
-
-  transformVector();
-
-  tr_OffsetAcceleration = tr_Acceleration;
-}
-
+//Gets transform of the robot relative to the field
 void InertialOdom::findDisplacement()
 {
   //transform the acceleration vector

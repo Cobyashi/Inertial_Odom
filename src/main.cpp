@@ -19,7 +19,7 @@ competition Competition;
 
 const double REFRESH_RATE = 20;
 
-InertialOdom odom;
+InertialOdom odom(inertialSens, REFRESH_RATE);
 
 void usercontrol()
 {
@@ -47,8 +47,6 @@ void usercontrol()
 int main() {
   // Initializing Robot Configuration. DO NOT REMOVE!
   vexcodeInit();
-
-  odom.initialize(REFRESH_RATE);
 
   Competition.drivercontrol(usercontrol);
 

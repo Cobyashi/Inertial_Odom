@@ -25,10 +25,12 @@ class InertialOdom
         //Unit Vector
         struct Vector
         {
-            double x;
-            double y;
-            double z;
+            double x = 0;
+            double y = 0;
+            double z = 0;
         };
+
+        inertial & inertialSensor;
 
     public:
 
@@ -47,6 +49,22 @@ class InertialOdom
         Vector angularVelocity; //Rate from the gyro sensor
         Vector s_angle; //Sensors direction
 
+        InertialOdom(inertial & sensor, double dt) : inertialSensor(sensor)
+        {
+          this->dt = dt;
+
+          inertialSens.calibrate();
+          waitUntil(!inertialSens.isCalibrating());
+
+          setInertialData();
+
+          updateMatrix();
+
+          transformVector();
+
+          tr_OffsetAcceleration = tr_Acceleration;
+        }
+
         void setInertialData();
 
         void updateMatrix();
@@ -54,8 +72,6 @@ class InertialOdom
         void transformVector();
 
         Vector integrateVector(Vector a, Vector A, double dt);
-
-        void initialize(double dt);
 
         void findDisplacement();
 };
